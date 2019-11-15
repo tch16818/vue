@@ -4,32 +4,53 @@
     :close-on-click-modal="false"
     :visible.sync="visible">
     <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
-      <el-form-item label="用户名" prop="userName">
+      <el-form-item label="用户账号" prop="userName">
         <el-input v-model="dataForm.userName" placeholder="登录帐号"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="password" :class="{ 'is-required': !dataForm.id }">
+
+      <el-form-item label="用户姓名" prop="userRealName">
+        <el-input v-model="dataForm.userRealName" placeholder="用户姓名"></el-input>
+      </el-form-item>
+
+      <el-form-item label="角色" prop="roleList">
+        <el-select v-model="dataForm.roleList" placeholder="请选择" @change="roleChange">
+          <el-option v-for="role in roleList" :key="role.roleId" :label="role.roleName" :value="role.roleId"></el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item label="初始密码" prop="password" :class="{ 'is-required': !dataForm.id }">
         <el-input v-model="dataForm.password" type="password" placeholder="密码"></el-input>
       </el-form-item>
       <el-form-item label="确认密码" prop="comfirmPassword" :class="{ 'is-required': !dataForm.id }">
         <el-input v-model="dataForm.comfirmPassword" type="password" placeholder="确认密码"></el-input>
       </el-form-item>
-      <el-form-item label="邮箱" prop="email">
-        <el-input v-model="dataForm.email" placeholder="邮箱"></el-input>
-      </el-form-item>
+
       <el-form-item label="手机号" prop="mobile">
         <el-input v-model="dataForm.mobile" placeholder="手机号"></el-input>
       </el-form-item>
-      <el-form-item label="角色" size="mini" prop="roleIdList">
-        <el-checkbox-group v-model="dataForm.roleIdList">
-          <el-checkbox v-for="role in roleList" :key="role.roleId" :label="role.roleId">{{ role.roleName }}</el-checkbox>
-        </el-checkbox-group>
+
+      <el-form-item label="用户类型" prop="userTypeList">
+        <el-select v-model="dataForm.userTypeList" placeholder="请选择" @change="userTypeChange">
+          <el-option v-for="userType in userTypeList" :key="userType.userTypeId" :label="userType.UserTypeName" :value="userType.userTypeId"></el-option>
+        </el-select>
       </el-form-item>
-      <el-form-item label="状态" size="mini" prop="status">
-        <el-radio-group v-model="dataForm.status">
-          <el-radio :label="0">禁用</el-radio>
-          <el-radio :label="1">正常</el-radio>
-        </el-radio-group>
+
+      <el-form-item label="性别"  prop="sex">
+        <el-select v-model="dataForm.sexList" placeholder="请选择" @change="sexChange">
+          <el-option v-for="sex in sexList" :key="sex.sexId" :label="sex.sexName" :value="sex.sexId"></el-option>
+        </el-select>
       </el-form-item>
+
+      <el-form-item label="年龄" prop="age">
+        <el-input v-model="dataForm.age" placeholder="年龄"></el-input>
+      </el-form-item>
+      
+      <el-form-item label="学历" prop="education">
+        <el-select v-model="dataForm.educationList" placeholder="请选择" @change="eduChange">
+          <el-option v-for="edu in education" :key="edu.eduId" :label="edu.eduName" :value="edu.eduId"></el-option>
+        </el-select>
+      </el-form-item>
+
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="visible = false">取消</el-button>
@@ -39,7 +60,7 @@
 </template>
 
 <script>
-  import { isEmail, isMobile } from '@/utils/validate'
+  import { isMobile } from '@/utils/validate'
   export default {
     data () {
       var validatePassword = (rule, value, callback) => {
@@ -58,13 +79,7 @@
           callback()
         }
       }
-      var validateEmail = (rule, value, callback) => {
-        if (!isEmail(value)) {
-          callback(new Error('邮箱格式错误'))
-        } else {
-          callback()
-        }
-      }
+
       var validateMobile = (rule, value, callback) => {
         if (!isMobile(value)) {
           callback(new Error('手机号格式错误'))
@@ -72,6 +87,7 @@
           callback()
         }
       }
+
       return {
         visible: false,
         roleList: [],
@@ -80,11 +96,10 @@
           userName: '',
           password: '',
           comfirmPassword: '',
+          roleIdList: [],
           salt: '',
           email: '',
-          mobile: '',
-          roleIdList: [],
-          status: 1
+          mobile: ''
         },
         dataRule: {
           userName: [
@@ -95,10 +110,6 @@
           ],
           comfirmPassword: [
             { validator: validateComfirmPassword, trigger: 'blur' }
-          ],
-          email: [
-            { required: true, message: '邮箱不能为空', trigger: 'blur' },
-            { validator: validateEmail, trigger: 'blur' }
           ],
           mobile: [
             { required: true, message: '手机号不能为空', trigger: 'blur' },
@@ -178,3 +189,4 @@
     }
   }
 </script>
+

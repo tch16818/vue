@@ -1,8 +1,8 @@
 {
   "name": "renren-fast-vue",
   "version": "1.2.2",
-  "description": "renren-fast-vue基于vue、element-ui构建开发，实现renren-fast后台管理前端功能，提供一套更优的前端解决方案。",
-  "author": "daxiong.yang <daxiong.yang@qq.com>",
+  "description": "baiin科技有限公司 智慧林场项目",
+  "author": "baiin科技有限公司",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
@@ -24,7 +24,7 @@
     "gulp-replace": "0.6.1",
     "gulp-shell": "0.6.5",
     "lodash": "4.17.5",
-    "node-sass": "4.9.0",
+    "node-sass": "^4.13.0",
     "npm": "^6.9.0",
     "sass-loader": "6.0.6",
     "svg-sprite-loader": "3.7.3",
